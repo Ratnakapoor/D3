@@ -4,7 +4,6 @@ function makeResponsive() {
   // if the SVG area isn't empty when the browser loads, remove it
   // and replace it with a resized version of the chart
 
-
 var svgArea = d3.select("body").select("svg");
   if (!svgArea.empty()) {
     svgArea.remove();
@@ -12,10 +11,6 @@ var svgArea = d3.select("body").select("svg");
 
   var svgWidth = window.innerWidth;
   var svgHeight = window.innerHeight;
-
-
-
-
 
 var margin = {
   top: 20,
@@ -29,9 +24,7 @@ var height = svgHeight - margin.top - margin.bottom;
 
 
 // Step 2: Create an SVG wrapper,
-// append an SVG group that will hold our chart,
-// and shift the latter by left and top margins.
-// =================================
+
 
 var svg = d3.select(".chart")
   .append("svg")
@@ -39,13 +32,11 @@ var svg = d3.select(".chart")
   .attr("height", svgHeight);
 
 var chartGroup = svg.append("g")
-.attr("transform",`translate(${margin.left} , ${margin.top})`)
+  .attr("transform",`translate(${margin.left} , ${margin.top})`);
 
 
-  
 // Initial Params
 var chosenXAxis = "poverty";
-
 
 // function used for updating x-scale var upon click on axis label
 function xScale(censusData, chosenXAxis) {
@@ -73,8 +64,7 @@ function renderAxes(newXScale, xAxis) {
   }
 
 
-// function used for updating circles group with a transition to
-// new circles
+// function used for updating circles group with a transition to new circles
 function renderCircles(circlesGroup, newXScale, chosenXAxis) {
 
     circlesGroup.transition()
@@ -95,7 +85,6 @@ function updateToolTip(chosenXAxis, circlesGroup) {
       var label = "Age(Median):";
     }
 
-
   
     var toolTip = d3.tip()
       .attr("class", "tooltip")
@@ -104,8 +93,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
         return (`<center>${d.state}<center/> Lacks Healthcare: ${d.healthcare}% <br>${label} ${d[chosenXAxis]}%`);
       });
       
-   
-  
+     
     circlesGroup.call(toolTip);
   
     circlesGroup.on("mouseover", function(data) {
@@ -140,8 +128,7 @@ d3.csv("data.csv", function(error, censusData) {
     .range([height, 0]);
 
 
-
-// Step 6: Create Axis 
+//  Create Axis 
     var bottomAxis = d3.axisBottom(xLinearScale);
     var leftAxis = d3.axisLeft(yLinearScale);
 
@@ -184,8 +171,7 @@ var circlesGroup = chartGroup.selectAll("circle")
     .attr("class","stateText")
     .attr("fill", "black")
     
-   
-   
+     
 
 // Create x axes labels
 var labelsGroup = chartGroup.append("g")
@@ -215,7 +201,6 @@ chartGroup.append("text")
     .text("Lack of Healthcare(%)");
 
     
-
  // updateToolTip function above csv import
 var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 
